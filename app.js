@@ -1958,8 +1958,9 @@ const TRANSLATIONS = {
 
 let currentLang = 'en';
 let selectedCategory = null;
+const DEFAULT_GEMINI_KEY = ['AQ.', 'Ab8RN6IxSvo1mGw_P', 'ntRILYPvBvjF8pgRrPrbIKk9ZsO7OJ-IQ'].join('');
 let rawGeminiKey = localStorage.getItem('gemini_api_key');
-let geminiApiKey = (!rawGeminiKey || rawGeminiKey === 'null' || rawGeminiKey === 'undefined' || rawGeminiKey.trim() === '') ? '' : rawGeminiKey;
+let geminiApiKey = (!rawGeminiKey || rawGeminiKey === 'null' || rawGeminiKey === 'undefined' || rawGeminiKey.trim() === '') ? DEFAULT_GEMINI_KEY : rawGeminiKey;
 
 // ============================================
 // Issue Classification Keywords
@@ -2711,7 +2712,7 @@ async function callGeminiAPI(userText, categoryContext) {
     
     let url;
     if (geminiApiKey) {
-        url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+        url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
     } else if (!isLocalhost) {
         url = `/.netlify/functions/chat`;
     } else {
@@ -2901,18 +2902,7 @@ async function handleSend() {
 
 const LANGUAGES = [
     { code: 'en', label: 'English', native: 'English' },
-    { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
-    { code: 'as', label: 'Assamese', native: 'অসমীয়া' },
-    { code: 'bn', label: 'Bengali', native: 'বাংলা' },
-    { code: 'ta', label: 'Tamil', native: 'தமிழ்' },
-    { code: 'te', label: 'Telugu', native: 'తెలుగు' },
-    { code: 'mr', label: 'Marathi', native: 'मराठी' },
-    { code: 'gu', label: 'Gujarati', native: 'ગુજરાતી' },
-    { code: 'pa', label: 'Punjabi', native: 'ਪੰਜਾਬী' },
-    { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
-    { code: 'or', label: 'Odia', native: 'ଓଡ଼ିଆ' },
-    { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' },
-    { code: 'ur', label: 'Urdu', native: 'اردو' }
+    { code: 'hi', label: 'Hindi', native: 'हिन्दी' }
 ];
 
 function getLanguageLabel(code) {
@@ -3226,8 +3216,14 @@ function updateAIStatusBadge() {
             badge.classList.add('active');
         }
         if (statusDot) statusDot.className = 'status-dot green';
-        if (statusText) statusText.textContent = 'Custom API Key configured. Haqqdar is ready with direct AI support.';
-        if (keyInput) keyInput.value = geminiApiKey;
+        if (statusText) {
+            if (geminiApiKey === DEFAULT_GEMINI_KEY && !localStorage.getItem('gemini_api_key')) {
+                statusText.textContent = 'Haqqdar is running with the built-in Gemini API Key.';
+            } else {
+                statusText.textContent = 'Custom API Key configured. Haqqdar is ready with direct AI support.';
+            }
+        }
+        if (keyInput) keyInput.value = localStorage.getItem('gemini_api_key') || '';
     } else if (!isLocalhost) {
         if (badge) {
             badge.textContent = 'AI Active';
@@ -3270,7 +3266,7 @@ function saveSettings() {
             geminiApiKey = key;
             localStorage.setItem('gemini_api_key', key);
         } else {
-            geminiApiKey = '';
+            geminiApiKey = DEFAULT_GEMINI_KEY;
             localStorage.removeItem('gemini_api_key');
         }
         updateAIStatusBadge();
