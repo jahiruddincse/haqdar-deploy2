@@ -69,7 +69,7 @@ Special module for underserved communities in Northeast India:
 ### Local Development
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/haqdar.git
+git clone https://github.com/jahiruddincse/haqdar.git
 cd haqdar
 
 # Start local server
@@ -80,15 +80,13 @@ python3 -m http.server 8080
 
 ### AI Configuration
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/)
-2. Click the ⚙️ settings icon in the app
-3. Enter your Gemini API key
-4. AI chat is now active!
+2. Set it as `GEMINI_API_KEY` in your environment (for production) or save it in your browser's local storage (under the key `gemini_api_key` for quick testing).
+3. The AI Rights Navigator is now active!
 
 ### Deploy to Netlify
-1. Push to GitHub
-2. Connect repo to [Netlify](https://app.netlify.com)
-3. Set `GEMINI_API_KEY` as environment variable
-4. Deploy automatically
+1. Connect your repository `jahiruddincse/haqdar` to [Netlify](https://app.netlify.com).
+2. Set `GEMINI_API_KEY` as an environment variable in Netlify's build settings.
+3. Deploy automatically (Netlify will use the serverless functions under `netlify/functions/chat.js` to securely proxy your requests).
 
 ## 📜 Hackathon
 
