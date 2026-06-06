@@ -2016,7 +2016,7 @@ Rules & Requirements:
 3. For Northeast-specific queries (Assam, Nagaland, Manipur, Meghalaya, Mizoram, Arunachal Pradesh, Tripura & Sikkim), you must include specific local acts (such as BEFR 1873, Assam Land Regulation 1886) and verify that links/portals provided (like Dharitree, RTPS portals) are real and active.
 4. Keep the tone helpful, professional, and empowering.
 
-Current Language Selected in UI: ${currentLang === 'hi' ? 'Hindi' : currentLang === 'as' ? 'Assamese' : 'English'}.
+Current Language Selected in UI: ${getLanguageLabel(currentLang)}.
 
 ${contextStr}
 
@@ -2158,13 +2158,154 @@ async function handleSend() {
 // Language Switching
 // ============================================
 
+const LANGUAGES = [
+    { code: 'en', label: 'English', native: 'English' },
+    { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
+    { code: 'as', label: 'Assamese', native: 'অসমীয়া' },
+    { code: 'bn', label: 'Bengali', native: 'বাংলা' },
+    { code: 'ta', label: 'Tamil', native: 'தமிழ்' },
+    { code: 'te', label: 'Telugu', native: 'తెలుగు' },
+    { code: 'mr', label: 'Marathi', native: 'मराठी' },
+    { code: 'gu', label: 'Gujarati', native: 'ગુજરાતી' },
+    { code: 'pa', label: 'Punjabi', native: 'ਪੰਜਾਬী' },
+    { code: 'ml', label: 'Malayalam', native: 'മലയാളം' },
+    { code: 'or', label: 'Odia', native: 'ଓଡ଼ିଆ' },
+    { code: 'kn', label: 'Kannada', native: 'ಕನ್ನಡ' },
+    { code: 'ur', label: 'Urdu', native: 'اردو' }
+];
+
+function getLanguageLabel(code) {
+    const lang = LANGUAGES.find(l => l.code === code);
+    return lang ? lang.label : 'English';
+}
+
+
+// ============================================
+// UI Helper Functions (Quotes & Voice Mic)
+// ============================================
+
+let currentQuoteIndex = 0;
+let quoteTimer;
+
+function startQuoteRotation() {
+    const slides = document.querySelectorAll('.quote-slide');
+    const dots = document.querySelectorAll('.slider-dot');
+    if (slides.length === 0) return;
+
+    function showQuote(index) {
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        currentQuoteIndex = index;
+    }
+
+    // Click handler for dots
+    dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+            clearInterval(quoteTimer);
+            showQuote(idx);
+        });
+    });
+
+    // Auto rotate every 6 seconds
+    quoteTimer = setInterval(() => {
+        let nextIndex = (currentQuoteIndex + 1) % slides.length;
+        showQuote(nextIndex);
+    }, 6000);
+}
+
+let isRecording = false;
+function setupVoiceMic() {
+    const micBtn = document.getElementById('mic-btn');
+    const statusBar = document.getElementById('voice-status-bar');
+    const statusText = document.getElementById('voice-status-text');
+    const chatInput = document.getElementById('chat-input');
+
+    if (!micBtn) return;
+
+    micBtn.addEventListener('click', () => {
+        if (isRecording) {
+            isRecording = false;
+            micBtn.classList.remove('listening');
+            if (statusBar) statusBar.style.display = 'none';
+        } else {
+            isRecording = true;
+            micBtn.classList.add('listening');
+            if (statusBar) {
+                statusBar.style.display = 'flex';
+                statusText.textContent = "Listening... Speak naturally in your language";
+            }
+
+            // Simulated voice transcription after 3 seconds
+            setTimeout(() => {
+                if (!isRecording) return;
+
+                const voiceSamples = [
+                    "Police station mein FIR nahi le rahe, 2 baar gaya",
+                    "Company has not paid my salary for 3 months, how to get wages",
+                    "Ration card active hone par bhi ration dealer ration dene se mana kar raha hai",
+                    "I applied for scholarship but it got rejected without any reason",
+                    "Tea garden owner minimum wages and medical benefits are not giving to worker",
+                    "Flood water damaged all my crops in Assam, DC office pending relief"
+                ];
+
+                const randomSample = voiceSamples[Math.floor(Math.random() * voiceSamples.length)];
+                
+                if (chatInput) {
+                    chatInput.value = randomSample;
+                    autoResize(chatInput);
+                }
+
+                isRecording = false;
+                micBtn.classList.remove('listening');
+                if (statusBar) statusBar.style.display = 'none';
+
+                // Send automatically after writing
+                setTimeout(() => {
+                    handleSend();
+                }, 500);
+
+            }, 3000);
+        }
+    });
+}
+
+function renderLanguageDropdown() {
+    const listEl = document.getElementById('lang-options-list');
+    if (!listEl) return;
+    listEl.innerHTML = '';
+    LANGUAGES.forEach(lang => {
+        const btn = document.createElement('button');
+        btn.className = `lang-option-item ${lang.code === currentLang ? 'active' : ''}`;
+        btn.dataset.lang = lang.code;
+        btn.dataset.search = `${lang.label} ${lang.native}`;
+        btn.innerHTML = `
+            <span>${lang.label}</span>
+            <span class="lang-native-label">${lang.native}</span>
+        `;
+        btn.addEventListener('click', () => {
+            switchLanguage(lang.code);
+        });
+        listEl.appendChild(btn);
+    });
+}
+
 function switchLanguage(lang) {
     currentLang = lang;
 
-    // Update button states
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
+    // Update dropdown option active states
+    document.querySelectorAll('.lang-option-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.lang === lang);
     });
+
+    // Update button label
+    const labelEl = document.getElementById('current-lang-label');
+    if (labelEl) {
+        labelEl.textContent = getLanguageLabel(lang);
+    }
+
+    // Hide dropdown
+    const dropdown = document.getElementById('lang-dropdown');
+    if (dropdown) dropdown.classList.remove('active');
 
     // Update all translatable elements
     const translations = TRANSLATIONS[lang] || TRANSLATIONS['en'];
@@ -2396,48 +2537,48 @@ function saveSettings() {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Sync AI Status
-    updateAIStatusBadge();
-
     // Render Case Dashboard (load stored cases)
     renderCaseDashboard();
 
-    // Settings Modal Listeners
-    const settingsBtn = document.getElementById('settings-btn');
-    if (settingsBtn) {
-        settingsBtn.addEventListener('click', showSettingsModal);
-    }
+    // Render 13 Languages dropdown
+    renderLanguageDropdown();
 
-    const modalClose = document.getElementById('modal-close');
-    if (modalClose) {
-        modalClose.addEventListener('click', hideSettingsModal);
-    }
-
-    const btnCancel = document.getElementById('btn-cancel-settings');
-    if (btnCancel) {
-        btnCancel.addEventListener('click', hideSettingsModal);
-    }
-
-    const btnSave = document.getElementById('btn-save-settings');
-    if (btnSave) {
-        btnSave.addEventListener('click', saveSettings);
-    }
-
-    const settingsModal = document.getElementById('settings-modal');
-    if (settingsModal) {
-        settingsModal.addEventListener('click', (e) => {
-            if (e.target === settingsModal) {
-                hideSettingsModal();
-            }
+    // Language dropdown toggle
+    const langMenuBtn = document.getElementById('lang-menu-btn');
+    const langDropdown = document.getElementById('lang-dropdown');
+    
+    if (langMenuBtn && langDropdown) {
+        langMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
         });
     }
+
+    // Close dropdown on click outside
+    document.addEventListener('click', (e) => {
+        if (langDropdown && !langDropdown.contains(e.target) && e.target !== langMenuBtn) {
+            langDropdown.classList.remove('active');
+        }
+    });
+
+    // Language search filtering
+    const langSearchInput = document.getElementById('lang-search-input');
+    if (langSearchInput) {
+        langSearchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            document.querySelectorAll('.lang-option-item').forEach(item => {
+                const label = item.dataset.search.toLowerCase();
+                item.style.display = label.includes(query) ? 'flex' : 'none';
+            });
+        });
+    }
+
+    // Initialize Quotes rotator & voice mic
+    startQuoteRotation();
+    setupVoiceMic();
+
     // Scroll handler
     window.addEventListener('scroll', handleScroll);
-
-    // Language buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
-    });
 
     // Category cards
     document.querySelectorAll('.category-card').forEach(card => {

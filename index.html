@@ -3,186 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HaqDar — हक़दार | Your Rights, Your Words</title>
-    <meta name="description" content="HaqDar: AI-powered legal escalation tool for when the system says NO. Fight back with the right legal documents in your language.">
+    <title>HaqDar (हक़दार) — Your Rights. Your Voice. Your Next Step.</title>
+    <meta name="description" content="HaqDar is India's AI-powered Rights, Benefits, and Public Services Intelligence Platform. We identify your rights, generate legal documents, and show you the path.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <!-- Ambient Background -->
     <div class="ambient-bg">
-        <div class="ambient-orb orb-1"></div>
-        <div class="ambient-orb orb-2"></div>
-        <div class="ambient-orb orb-3"></div>
+        <div class="ambient-orb orb-saffron"></div>
+        <div class="ambient-orb orb-white"></div>
+        <div class="ambient-orb orb-green"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
                 <span class="logo-icon">⚖️</span>
-                <span class="logo-text">HaqDar</span>
-                <span class="logo-hindi">हक़दार</span>
+                <span class="logo-text">HaqDar <span class="logo-hindi">हक़दार</span></span>
             </a>
+            
             <div class="nav-links">
-                <a href="#how-it-works" class="nav-link">How It Works</a>
-                <a href="#categories" class="nav-link">Categories</a>
-                <a href="#northeast" class="nav-link">Northeast</a>
-                <a href="#helplines" class="nav-link">Helplines</a>
+                <a href="#how-it-works" class="nav-link" data-i18n="nav_process">Process</a>
+                <a href="#showcase" class="nav-link" data-i18n="nav_features">Intelligence</a>
+                <a href="#chat" class="nav-link" data-i18n="nav_chat">AI Navigator</a>
+                <a href="#northeast" class="nav-link" data-i18n="nav_ne">Northeast Special</a>
+                <a href="#case-tracker" class="nav-link" data-i18n="nav_tracker">My Cases</a>
+                <a href="#helplines" class="nav-link" data-i18n="nav_helplines">Helplines</a>
             </div>
-            <div class="nav-lang">
-                <button class="lang-btn active" data-lang="en" id="lang-en">EN</button>
-                <button class="lang-btn" data-lang="hi" id="lang-hi">हिं</button>
-                <button class="lang-btn" data-lang="as" id="lang-as">অস</button>
+
+            <div class="nav-actions">
+                <!-- Searchable Language Dropdown -->
+                <div class="lang-selector-container">
+                    <button class="lang-selector-btn" id="lang-menu-btn" aria-haspopup="true" aria-expanded="false">
+                        <span class="globe-icon">🌐</span>
+                        <span id="current-lang-label">English</span>
+                        <span class="arrow-icon">▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <div class="lang-search-wrapper">
+                            <input type="text" id="lang-search-input" placeholder="Search language / भाषा खोजें..." autocomplete="off">
+                        </div>
+                        <div class="lang-options-list" id="lang-options-list">
+                            <!-- Languages will be rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
-            <button class="nav-settings-btn" id="settings-btn" title="Configure AI Settings">
-                <span>⚙️</span>
-                <span class="settings-badge" id="ai-status-badge">AI Off</span>
-            </button>
-            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
-        <div class="hero-container">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                <span data-i18n="hero_badge">AWAAZ Track — Build for Good Bharat</span>
-            </div>
-            <h1 class="hero-title" data-i18n="hero_title">
-                When the system says <span class="gradient-text">NO</span>,<br>
-                know what to say <span class="gradient-text">BACK</span>.
-            </h1>
-            <p class="hero-subtitle" data-i18n="hero_subtitle">
-                AI-powered legal escalation tool that turns your problem into a ready-to-file legal document with a step-by-step escalation path — in your language.
-            </p>
-            <div class="hero-cta">
-                <a href="#chat" class="btn btn-primary" id="start-btn">
-                    <span data-i18n="hero_cta">Describe Your Problem</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </a>
-                <a href="#how-it-works" class="btn btn-ghost">
-                    <span data-i18n="hero_cta2">See How It Works</span>
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number">3,000+</span>
-                    <span class="stat-label" data-i18n="stat1">Govt Schemes</span>
+        <div class="hero-layout">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span data-i18n="hero_badge">National Citizen-Rights Infrastructure</span>
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat-item">
-                    <span class="stat-number">5</span>
-                    <span class="stat-label" data-i18n="stat2">Legal Categories</span>
+                <h1 class="hero-title">
+                    <span class="hindi-headline">जब व्यवस्था मना कर दे, <br><span class="highlight-saffron">तो अपने अधिकार जानिए।</span></span>
+                    <span class="english-headline">When the System Says <span class="highlight-red">NO</span>, <br>Know What to Say <span class="highlight-green">BACK</span>.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Millions of Indians lose benefits, wages, justice, and opportunities simply because they do not know the next step. HaqDar uses AI to identify your rights, generate legal documents, and guide you through every escalation path — in your language.
+                </p>
+                
+                <div class="hero-cta">
+                    <a href="#chat" class="btn btn-primary">
+                        <span>Describe Your Problem</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#how-it-works" class="btn btn-ghost">
+                        <span>See How It Works</span>
+                    </a>
                 </div>
-                <div class="stat-divider"></div>
-                <div class="stat-item">
-                    <span class="stat-number">3</span>
-                    <span class="stat-label" data-i18n="stat3">Languages</span>
+
+                <div class="trust-indicators">
+                    <div class="indicator-item">✓ 13 Indian Languages</div>
+                    <div class="indicator-item">✓ Northeast Specialization</div>
+                    <div class="indicator-item">✓ Govt Schemes Discovery</div>
+                    <div class="indicator-item">✓ Legal Escalation Paths</div>
+                    <div class="indicator-item">✓ Voice-First Access</div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-image-wrapper">
+                    <img src="hero_citizens_bg.png" alt="Hopeful and Empowered Indian Citizens" class="hero-main-img">
+                    <div class="image-overlay-card card-1">
+                        <span class="card-icon">⚡</span>
+                        <div>
+                            <h4>Real-time Protection</h4>
+                            <p>Rights grounded in Constitution of India</p>
+                        </div>
+                    </div>
+                    <div class="image-overlay-card card-2">
+                        <span class="card-icon">🏢</span>
+                        <div>
+                            <h4>Escalation Engine</h4>
+                            <p>Direct routes to relevant authorities</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
+    <!-- Rotating Citizen Quotes Section -->
+    <section class="quotes-section">
+        <div class="section-container">
+            <div class="quote-slider-container">
+                <div class="quote-slide active" id="quote-1">
+                    <p class="quote-text">"Nobody told me I could appeal the rejection. I thought my dream of studying was over."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">🎓</div>
+                        <div>
+                            <h4 class="author-name">Anjali Das</h4>
+                            <p class="author-meta">Scholarship Applicant, West Bengal</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-slide" id="quote-2">
+                    <p class="quote-text">"I thought the police refusing my complaint was the end. HaqDar drafted the petition to the SP in minutes."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">👨🏽‍🌾</div>
+                        <div>
+                            <h4 class="author-name">Rupesh Gogoi</h4>
+                            <p class="author-meta">Citizen, Assam</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-slide" id="quote-3">
+                    <p class="quote-text">"My wages were unpaid for months. I didn't know where to go. The labour inspector letter worked."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">🔨</div>
+                        <div>
+                            <h4 class="author-name">Madan Lal</h4>
+                            <p class="author-meta">Daily Wage Worker, Uttar Pradesh</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-slide" id="quote-4">
+                    <p class="quote-text">"Our house was washed away in floods. The system said no, but HaqDar showed us the exact escalation path."</p>
+                    <div class="quote-author">
+                        <div class="author-avatar">👵🏽</div>
+                        <div>
+                            <h4 class="author-name">Pema Lepcha</h4>
+                            <p class="author-meta">Citizen, Sikkim</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-dots">
+                    <span class="slider-dot active" data-index="0"></span>
+                    <span class="slider-dot" data-index="1"></span>
+                    <span class="slider-dot" data-index="2"></span>
+                    <span class="slider-dot" data-index="3"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works (Visual Journey) -->
     <section class="how-it-works" id="how-it-works">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag" data-i18n="hiw_tag">THE PROCESS</span>
-                <h2 class="section-title" data-i18n="hiw_title">From problem to legal document in <span class="gradient-text">60 seconds</span></h2>
+                <span class="section-tag">THE PROCESS</span>
+                <h2 class="section-title">From Problem to Resolution: <span class="gradient-text">A Visual Journey</span></h2>
+                <p class="section-desc">We translate complex bureaucracy into a plain-language action plan in 6 easy steps.</p>
             </div>
-            <div class="steps-grid">
-                <div class="step-card" data-step="1">
-                    <div class="step-number">01</div>
-                    <div class="step-icon">🗣️</div>
-                    <h3 data-i18n="step1_title">Describe Your Problem</h3>
-                    <p data-i18n="step1_desc">Tell us what happened in plain language. Hindi, English, or Assamese — type or speak.</p>
+            
+            <div class="journey-timeline">
+                <div class="journey-step">
+                    <div class="journey-step-marker">1</div>
+                    <div class="journey-step-card">
+                        <div class="journey-icon">🗣️</div>
+                        <h3>Describe Problem</h3>
+                        <p>Speak or type in your native tongue about what went wrong.</p>
+                    </div>
                 </div>
-                <div class="step-connector"><svg width="40" height="2"><line x1="0" y1="1" x2="40" y2="1" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4"/></svg></div>
-                <div class="step-card" data-step="2">
-                    <div class="step-number">02</div>
-                    <div class="step-icon">🧠</div>
-                    <h3 data-i18n="step2_title">AI Identifies Your Rights</h3>
-                    <p data-i18n="step2_desc">AI classifies your issue, identifies relevant laws, and determines which authority to approach.</p>
+                <div class="journey-step">
+                    <div class="journey-step-marker">2</div>
+                    <div class="journey-step-card">
+                        <div class="journey-icon">🧠</div>
+                        <h3>AI Analyzes Rights</h3>
+                        <p>Our engine maps your issue to the Constitution & active laws.</p>
+                    </div>
                 </div>
-                <div class="step-connector"><svg width="40" height="2"><line x1="0" y1="1" x2="40" y2="1" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4"/></svg></div>
-                <div class="step-card" data-step="3">
-                    <div class="step-number">03</div>
-                    <div class="step-icon">📄</div>
-                    <h3 data-i18n="step3_title">Get Legal Documents</h3>
-                    <p data-i18n="step3_desc">Auto-generated complaint, RTI, or escalation letter — in correct legal format, ready to submit.</p>
+                <div class="journey-step">
+                    <div class="journey-step-marker">3</div>
+                    <div class="journey-step-card">
+                        <div class="journey-icon">📄</div>
+                        <h3>Document Drafted</h3>
+                        <p>Receive a customized, legal written complaint or RTI template.</p>
+                    </div>
                 </div>
-                <div class="step-connector"><svg width="40" height="2"><line x1="0" y1="1" x2="40" y2="1" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4"/></svg></div>
-                <div class="step-card" data-step="4">
-                    <div class="step-number">04</div>
-                    <div class="step-icon">🔼</div>
-                    <h3 data-i18n="step4_title">Escalation Ladder</h3>
-                    <p data-i18n="step4_desc">Step-by-step escalation path with contacts, portal links, and deadlines. Never get stuck again.</p>
+                <div class="journey-step">
+                    <div class="journey-step-marker">4</div>
+                    <div class="journey-step-card">
+                        <div class="journey-icon">🧗🏽</div>
+                        <h3>Escalation Path</h3>
+                        <p>Know exactly whom to contact if your initial plea is ignored.</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="journey-step-marker">5</div>
+                    <div class="journey-step-card">
+                        <div class="journey-icon">📅</div>
+                        <h3>Deadline Tracking</h3>
+                        <p>Track response windows and calendar milestones automatically.</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="journey-step-marker">6</div>
+                    <div class="journey-step-card">
+                        <div class="journey-icon">🏁</div>
+                        <h3>Resolution Guidance</h3>
+                        <p>Follow-through templates until your case reaches a verdict.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Categories -->
-    <section class="categories" id="categories">
+    <!-- Hero Capabilities Showcase (Timeline & Gap Detector) -->
+    <section class="showcase-section" id="showcase">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag" data-i18n="cat_tag">WHAT WE COVER</span>
-                <h2 class="section-title" data-i18n="cat_title">Select your <span class="gradient-text">issue</span></h2>
+                <span class="section-tag">INTELLIGENCE PLATFORM</span>
+                <h2 class="section-title">Engineered to <span class="gradient-text">Bridge the Power Gap</span></h2>
+                <p class="section-desc">HaqDar is not just a chatbot. It is a digital public utility designed to help you navigate hostile bureaucratic systems.</p>
             </div>
-            <div class="categories-grid">
-                <button class="category-card" data-category="fir" id="cat-fir">
-                    <div class="cat-icon">🚔</div>
-                    <h3 data-i18n="cat_fir">FIR Refused</h3>
-                    <p data-i18n="cat_fir_desc">Police won't register your complaint</p>
-                    <div class="cat-laws">Sec 173 BNSS • Zero FIR</div>
-                </button>
-                <button class="category-card" data-category="rti" id="cat-rti">
-                    <div class="cat-icon">📋</div>
-                    <h3 data-i18n="cat_rti">File RTI</h3>
-                    <p data-i18n="cat_rti_desc">Get information from any government office</p>
-                    <div class="cat-laws">RTI Act 2005 • Sec 6(1)</div>
-                </button>
-                <button class="category-card" data-category="wages" id="cat-wages">
-                    <div class="cat-icon">💰</div>
-                    <h3 data-i18n="cat_wages">Wages Unpaid</h3>
-                    <p data-i18n="cat_wages_desc">Employer hasn't paid your salary</p>
-                    <div class="cat-laws">Code on Wages 2019</div>
-                </button>
-                <button class="category-card" data-category="scheme" id="cat-scheme">
-                    <div class="cat-icon">🏛️</div>
-                    <h3 data-i18n="cat_scheme">Scheme Rejected</h3>
-                    <p data-i18n="cat_scheme_desc">Wrongly denied a government scheme</p>
-                    <div class="cat-laws">CPGRAMS • State Portals</div>
-                </button>
-                <button class="category-card" data-category="ration" id="cat-ration">
-                    <div class="cat-icon">🍚</div>
-                    <h3 data-i18n="cat_ration">Ration Denied</h3>
-                    <p data-i18n="cat_ration_desc">PDS shop refused to give ration</p>
-                    <div class="cat-laws">NFSA 2013 • Sec 3, 8</div>
-                </button>
-                <button class="category-card" data-category="northeast" id="cat-northeast">
-                    <div class="cat-icon">🏔️</div>
-                    <h3 data-i18n="cat_ne">Northeast Special</h3>
-                    <p data-i18n="cat_ne_desc">AFSPA, NRC, ILP, Tribal Land Rights</p>
-                    <div class="cat-laws">6th Schedule • AFSPA • NHRC</div>
-                </button>
+
+            <div class="showcase-grid">
+                <!-- Rights Timeline Tracker Showcase -->
+                <div class="showcase-card">
+                    <div class="showcase-card-header">
+                        <span class="badge badge-saffron">Feature Highlight</span>
+                        <h3>Rights Timeline Tracker</h3>
+                    </div>
+                    <p class="showcase-card-text">
+                        Every legal process in India has statutory timelines. HaqDar maps them visually so you know exactly when the system has exceeded its legal response window.
+                    </p>
+                    <div class="timeline-visual-widget">
+                        <div class="widget-timeline-node completed">
+                            <span class="node-dot"></span>
+                            <div class="node-info">
+                                <h5>Complaint Submitted</h5>
+                                <span class="node-time">Day 0</span>
+                            </div>
+                        </div>
+                        <div class="widget-timeline-node active">
+                            <span class="node-dot"></span>
+                            <div class="node-info">
+                                <h5>Response Due (SHO/Officer)</h5>
+                                <span class="node-time">Day 15</span>
+                            </div>
+                        </div>
+                        <div class="widget-timeline-node">
+                            <span class="node-dot"></span>
+                            <div class="node-info">
+                                <h5>First Appeal Trigger</h5>
+                                <span class="node-time">Day 30</span>
+                            </div>
+                        </div>
+                        <div class="widget-timeline-node">
+                            <span class="node-dot"></span>
+                            <div class="node-info">
+                                <h5>Higher Authority Escalation</h5>
+                                <span class="node-time">Day 45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Gap Detector Showcase -->
+                <div class="showcase-card">
+                    <div class="showcase-card-header">
+                        <span class="badge badge-green">Hero Capability</span>
+                        <h3>Document Gap Detector</h3>
+                    </div>
+                    <p class="showcase-card-text">
+                        Over 70% of welfare and land claims are rejected due to tiny documentation gaps. Our detector helps you fix rejections before they happen.
+                    </p>
+                    <div class="gap-detector-widget">
+                        <div class="detector-header">
+                            <span class="status-indicator-tag status-rejected">Application Denied</span>
+                            <span class="detector-id">Scheme: PM Kisan Samman</span>
+                        </div>
+                        <div class="detector-checklist">
+                            <div class="checklist-item ok">
+                                <span class="chk-status">✓</span>
+                                <span class="chk-name">Aadhaar Card</span>
+                            </div>
+                            <div class="checklist-item ok">
+                                <span class="chk-status">✓</span>
+                                <span class="chk-name">Income Certificate</span>
+                            </div>
+                            <div class="checklist-item missing">
+                                <span class="chk-status">✗</span>
+                                <span class="chk-name">Land Patta / Jamabandi Copy</span>
+                            </div>
+                        </div>
+                        <div class="detector-analysis">
+                            💡 <strong>Likely Cause of Rejection:</strong> Land Mutation Record missing. Land proof must be downloaded from the state land portal and uploaded.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Chat Section -->
+    <!-- AI Rights Navigator (Chat Section) -->
     <section class="chat-section" id="chat">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag" data-i18n="chat_tag">YOUR ISSUE</span>
-                <h2 class="section-title" data-i18n="chat_title">Tell us what <span class="gradient-text">happened</span></h2>
+                <span class="section-tag">AI NAVIGATOR</span>
+                <h2 class="section-title">Describe Your Case</h2>
+                <p class="section-desc">Type or speak. AI will identify your rights under the Constitution of India, generate legal files, and list the escalation path.</p>
             </div>
+
             <div class="chat-container">
                 <div class="chat-messages" id="chat-messages">
                     <div class="message bot-message">
@@ -190,44 +337,50 @@
                         <div class="message-content">
                             <p data-i18n="chat_welcome">Namaste! I'm HaqDar — your legal rights assistant. Tell me what happened to you in your own words. For example:</p>
                             <div class="example-queries">
-                                <button class="example-btn" data-query="Police station mein FIR nahi likh rahe, 2 baar gaya">
-                                    "Police station mein FIR nahi likh rahe"
-                                </button>
-                                <button class="example-btn" data-query="Meri salary 3 mahine se nahi aayi hai">
-                                    "Meri salary 3 mahine se nahi aayi"
-                                </button>
-                                <button class="example-btn" data-query="Ration card hone ke baad bhi ration nahi mil raha">
-                                    "Ration card hai par ration nahi milta"
-                                </button>
-                                <button class="example-btn" data-query="PM Kisan ka paisa nahi aaya, reject ho gaya">
-                                    "PM Kisan reject ho gaya"
-                                </button>
-                                <button class="example-btn" data-query="Army ne mere ghar mein ghuskar todphod ki, AFSPA area">
-                                    "Army ne ghar mein todphod ki (AFSPA)"
-                                </button>
+                                <button class="example-btn" data-query="Police station mein FIR nahi likh rahe, 2 baar gaya">🚔 Police refused my FIR</button>
+                                <button class="example-btn" data-query="Meri salary 3 mahine se nahi aayi hai">💰 Salary not paid for months</button>
+                                <button class="example-btn" data-query="Ration card hone ke baad bhi ration nahi mil raha">🍚 Ration shop denied food grains</button>
+                                <button class="example-btn" data-query="PM Kisan ka paisa nahi aaya, reject ho gaya">🏛️ PM Kisan application rejected</button>
+                                <button class="example-btn" data-query="Tea garden worker minimum wages and basic medical services denied in estate">🌱 Tea garden worker rights denied</button>
+                                <button class="example-btn" data-query="Assam crop damage flood relief application status pending">🌊 Flood crop compensation delay</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="chat-input-container">
                     <div class="selected-category-badge" id="selected-category-badge" style="display:none;">
                         <span id="selected-category-text"></span>
                         <button id="clear-category" aria-label="Clear category">✕</button>
                     </div>
+                    
                     <div class="chat-input-wrapper">
+                        <!-- Mic Button with Pulsing Wave -->
+                        <button class="mic-btn" id="mic-btn" title="Speak naturally / बोलें">
+                            <span class="mic-icon">🎙️</span>
+                            <span class="mic-pulse-ring"></span>
+                        </button>
+                        
                         <textarea
                             class="chat-input"
                             id="chat-input"
-                            placeholder="Describe your problem here..."
+                            placeholder="Describe your situation in any language... (e.g. My salary has not been paid...)"
                             rows="1"
                             data-i18n-placeholder="chat_placeholder"
                         ></textarea>
+                        
                         <button class="send-btn" id="send-btn" aria-label="Send message">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                         </button>
                     </div>
+                    
+                    <div class="voice-status-bar" id="voice-status-bar" style="display: none;">
+                        <span class="recording-indicator"></span>
+                        <span id="voice-status-text">Listening... Speak now</span>
+                    </div>
+
                     <div class="chat-disclaimer" data-i18n="chat_disclaimer">
-                        HaqDar provides legal information, not legal advice. Always consult a lawyer for complex matters.
+                        HaqDar grounds all advice in the Constitution of India. It provides legal information, not professional legal counsel.
                     </div>
                 </div>
             </div>
@@ -238,15 +391,15 @@
     <section class="case-tracker-section" id="case-tracker">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag" data-i18n="tracker_tag">COMPANION</span>
-                <h2 class="section-title"><span class="gradient-text">My Active Cases</span> & Companion</h2>
-                <p class="section-desc">Track deadlines, check off document requirements, and generate follow-up appeals when bureaucracy stalls your rights.</p>
+                <span class="section-tag">COMPANION</span>
+                <h2 class="section-title">My Active Rights Cases</h2>
+                <p class="section-desc">Track response deadlines, checklist requirements, and generate follow-up letters when bureaucracy stalls your rights.</p>
             </div>
             <div class="tracker-dashboard" id="tracker-dashboard">
                 <div class="no-cases-card" id="no-cases-card">
                     <div class="no-cases-icon">📁</div>
-                    <h3>No Active Cases Yet</h3>
-                    <p>Describe your issue in the chat above and click <strong>"Track this Case"</strong> to start navigating the system step-by-step.</p>
+                    <h3>No Active Cases Under Navigation</h3>
+                    <p>Describe your issue in the AI Navigator chat above and click <strong>"Track this Case"</strong> to add it to your dashboard.</p>
                 </div>
                 <div class="active-cases-list" id="active-cases-list" style="display: none;">
                     <!-- Case cards will be dynamically rendered here -->
@@ -255,52 +408,56 @@
         </div>
     </section>
 
-    <!-- Northeast Special Section -->
+    <!-- Northeast Special Section Redesign -->
     <section class="northeast-section" id="northeast">
+        <div class="northeast-bg-backdrop" style="background-image: url('northeast_bg.png');"></div>
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">🏔️ NORTHEAST INDIA</span>
-                <h2 class="section-title" data-i18n="ne_title">Special protections for the <span class="gradient-text">Northeast</span></h2>
-                <p class="section-desc" data-i18n="ne_desc">Unique legal frameworks for Assam, Nagaland, Manipur, Meghalaya, Mizoram, Arunachal Pradesh, Tripura & Sikkim</p>
+                <span class="section-tag">🏔️ REGIONAL DEEP SUPPORT</span>
+                <h2 class="section-title">Northeast India Deserves Better Access to Rights</h2>
+                <p class="section-desc">Unique geographical, historical, and customary challenges require localized legal and administrative guidance.</p>
             </div>
+
+            <div class="ne-map-highlight-wrapper">
+                <div class="states-indicator">
+                    <span>Assam</span> • <span>Meghalaya</span> • <span>Arunachal Pradesh</span> • <span>Nagaland</span> • <span>Mizoram</span> • <span>Manipur</span> • <span>Tripura</span> • <span>Sikkim</span>
+                </div>
+            </div>
+
             <div class="ne-grid">
                 <div class="ne-card clickable-card" data-ne-category="ne_land_flood">
                     <div class="ne-icon">🌊</div>
-                    <h3>Land Records & Flood Relief</h3>
-                    <p>Assam Dharitree land records, crop damage compensation delays, and PMAY housing rejections.</p>
+                    <h3>Flood Relief & Compensation</h3>
+                    <p>Assam Dharitree land mutation delays, flood crop damages under SDRF/NDRF, and PMAY-G rejections.</p>
                     <div class="ne-recourse">
                         <span class="ne-tag">Dharitree Portal</span>
-                        <span class="ne-tag">Circle Office</span>
-                        <span class="ne-tag">Revenue Dept</span>
+                        <span class="ne-tag">Circle Officer</span>
                     </div>
                 </div>
                 <div class="ne-card clickable-card" data-ne-category="ne_scholarship_tea">
-                    <div class="ne-icon">🎒</div>
-                    <h3>Scholarships & Tea Garden Rights</h3>
-                    <p>NSP/State student scholarship delays, EWS certificates, and Tea Garden worker rights.</p>
+                    <div class="ne-icon">🌱</div>
+                    <h3>Tea Garden Worker Rights</h3>
+                    <p>Wages and medical amenities under the Plantations Labour Act 1951, and Welfare of Tea Tribes benefits.</p>
                     <div class="ne-recourse">
-                        <span class="ne-tag">State Portal</span>
-                        <span class="ne-tag">Education Dept</span>
-                        <span class="ne-tag">Labour Court</span>
+                        <span class="ne-tag">Labour Inspector</span>
+                        <span class="ne-tag">ADC</span>
                     </div>
                 </div>
                 <div class="ne-card clickable-card" data-ne-category="ne_ilp_border">
                     <div class="ne-icon">🏔️</div>
-                    <h3>ILP & Border Area Disputes</h3>
-                    <p>Inner Line Permit (ILP) issues for entry and border land disputes in Assam/Arunachal.</p>
+                    <h3>Inner Line Permit (ILP)</h3>
+                    <p>ILP applications and renewal delays for entrance to border states and interstate border land disputes.</p>
                     <div class="ne-recourse">
-                        <span class="ne-tag">ILP Portal</span>
-                        <span class="ne-tag">DC Office</span>
                         <span class="ne-tag">Home Dept</span>
+                        <span class="ne-tag">DC Office</span>
                     </div>
                 </div>
                 <div class="ne-card clickable-card" data-ne-category="ne_customary_tribal">
                     <div class="ne-icon">🌿</div>
-                    <h3>Customary Laws & Tribal Land</h3>
-                    <p>Tribal land protection (Sixth Schedule), Meghalaya land records, and Nagaland customary law records.</p>
+                    <h3>Tribal Land Rights</h3>
+                    <p>Protections of tribal lands under Sixth Schedule, customary village council orders, and forest dweller rights (FRA).</p>
                     <div class="ne-recourse">
                         <span class="ne-tag">ADC Courts</span>
-                        <span class="ne-tag">Gram Sabha</span>
                         <span class="ne-tag">District Council</span>
                     </div>
                 </div>
@@ -308,109 +465,125 @@
         </div>
     </section>
 
-    <!-- Helplines -->
+    <!-- Helplines Section Redesign -->
     <section class="helplines-section" id="helplines">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag" data-i18n="help_tag">EMERGENCY</span>
-                <h2 class="section-title" data-i18n="help_title">Important <span class="gradient-text">Helplines</span></h2>
+                <span class="section-tag">EMERGENCY & CIVIC HELPLINES</span>
+                <h2 class="section-title">National Action Helpline Portal</h2>
+                <p class="section-desc">Instantly reach official government grievance and emergency cells.</p>
             </div>
+            
             <div class="helplines-grid">
                 <div class="helpline-card">
-                    <div class="hl-number">112</div>
-                    <div class="hl-label">Unified Emergency</div>
-                    <div class="hl-desc">Police, Fire, Ambulance</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">🚨</span>
+                        <span class="hl-number">112</span>
+                    </div>
+                    <h4>Unified Emergency</h4>
+                    <p>Police, fire, and ambulance services across India.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">181</div>
-                    <div class="hl-label">Women Helpline</div>
-                    <div class="hl-desc">24/7 — Violence & Abuse</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">👩🏽</span>
+                        <span class="hl-number">181</span>
+                    </div>
+                    <h4>Women Helpline</h4>
+                    <p>Domestic abuse and women protection support.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">1098</div>
-                    <div class="hl-label">Childline</div>
-                    <div class="hl-desc">Child Protection</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">👶🏽</span>
+                        <span class="hl-number">1098</span>
+                    </div>
+                    <h4>Childline</h4>
+                    <p>Child abuse, rescue, and child welfare support.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">1930</div>
-                    <div class="hl-label">Cyber Crime</div>
-                    <div class="hl-desc">Online Fraud & Harassment</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">💻</span>
+                        <span class="hl-number">1930</span>
+                    </div>
+                    <h4>Cyber Crime</h4>
+                    <p>Financial internet fraud and online harassment cells.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">14433</div>
-                    <div class="hl-label">NHRC</div>
-                    <div class="hl-desc">Human Rights Commission</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">🏛️</span>
+                        <span class="hl-number">14433</span>
+                    </div>
+                    <h4>NHRC Portal</h4>
+                    <p>National Human Rights Commission grievance reporting.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">1967</div>
-                    <div class="hl-label">PDS Helpline</div>
-                    <div class="hl-desc">Ration Related</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">🍚</span>
+                        <span class="hl-number">1967</span>
+                    </div>
+                    <h4>PDS Helpline</h4>
+                    <p>Ration card concerns and fair-price shop reports.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">14555</div>
-                    <div class="hl-label">Ayushman Bharat</div>
-                    <div class="hl-desc">Health Insurance</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">🏥</span>
+                        <span class="hl-number">14555</span>
+                    </div>
+                    <h4>Ayushman Bharat</h4>
+                    <p>Health insurance access and hospital complaints.</p>
                 </div>
                 <div class="helpline-card">
-                    <div class="hl-number">1064</div>
-                    <div class="hl-label">Anti-Corruption</div>
-                    <div class="hl-desc">CBI Helpline</div>
+                    <div class="hl-card-header">
+                        <span class="hl-icon">🔍</span>
+                        <span class="hl-number">1064</span>
+                    </div>
+                    <h4>Anti-Corruption</h4>
+                    <p>State vigilance & CBI anti-bribery emergency department.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer Redesign -->
     <footer class="footer">
         <div class="footer-container">
+            <div class="footer-header">
+                <h3 class="footer-quote">
+                    "Rights are not useful if people cannot access them."<br>
+                    <span class="footer-quote-hindi">"अधिकार तभी मायने रखते हैं जब लोग उनका उपयोग कर सकें।"</span>
+                </h3>
+            </div>
+            
             <div class="footer-main">
                 <div class="footer-brand">
                     <span class="logo-icon">⚖️</span>
-                    <span class="logo-text">HaqDar</span>
-                    <span class="logo-hindi">हक़दार</span>
+                    <span class="footer-brand-title">HaqDar</span>
+                    <p>India's AI Rights, Benefits and Public Services Navigator.</p>
                 </div>
-                <p class="footer-tagline" data-i18n="footer_tagline">Your Rights, Your Words. — Built for India, by India.</p>
+                
+                <div class="footer-links-grid">
+                    <div class="links-col">
+                        <h4>Knowledge Sources</h4>
+                        <a href="https://india.gov.in" target="_blank">National Portal</a>
+                        <a href="https://myscheme.gov.in" target="_blank">MyScheme Portal</a>
+                        <a href="https://pgportal.gov.in" target="_blank">CPGRAMS</a>
+                        <a href="https://rtionline.gov.in" target="_blank">RTI Online</a>
+                    </div>
+                    <div class="links-col">
+                        <h4>Public Infrastructure</h4>
+                        <a href="https://digilocker.gov.in" target="_blank">DigiLocker</a>
+                        <a href="https://bhashini.gov.in" target="_blank">Bhashini Translate</a>
+                        <a href="https://digitalpolice.gov.in" target="_blank">Digital Police</a>
+                        <a href="https://hrcnet.nic.in" target="_blank">NHRC India</a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-links">
-                <a href="https://pgportal.gov.in" target="_blank">CPGRAMS</a>
-                <a href="https://rtionline.gov.in" target="_blank">RTI Online</a>
-                <a href="https://digitalpolice.gov.in" target="_blank">Digital Police</a>
-                <a href="https://hrcnet.nic.in" target="_blank">NHRC</a>
-                <a href="https://nfsa.gov.in" target="_blank">NFSA</a>
-            </div>
+
             <div class="footer-bottom">
-                <p>Built for <strong>Build for Good Bharat</strong> Hackathon 🇮🇳</p>
-                <p class="footer-disclaimer" data-i18n="footer_disc">HaqDar provides legal information, not legal advice. Consult a qualified lawyer for specific legal matters.</p>
+                <p>Made for **Build for Good Bharat** Hackathon 🇮🇳</p>
+                <p class="footer-attribution">Built with the belief that every citizen deserves to be heard.</p>
             </div>
         </div>
     </footer>
-
-    <!-- Settings Modal -->
-    <div class="modal-backdrop" id="settings-modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 data-i18n="settings_title">⚙️ AI Settings</h3>
-                <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p data-i18n="settings_desc">HaqDar uses Google Gemini AI to analyze your problems, identify legal rights, and generate tailored legal documents.</p>
-                <div class="form-group">
-                    <label for="api-key-input" data-i18n="settings_key_label">Gemini API Key</label>
-                    <input type="password" id="api-key-input" placeholder="AIzaSy...">
-                </div>
-                <div class="api-help-text" data-i18n="settings_help_text">
-                    Don't have a key? <a href="https://aistudio.google.com/" target="_blank">Get a free Gemini API Key here ↗</a>
-                </div>
-                <div class="status-indicator" id="key-status-indicator">
-                    <span class="status-dot red" id="status-dot"></span> <span id="status-text">API Key is not set. Using rule-based fallback.</span>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-ghost" id="btn-cancel-settings" data-i18n="settings_cancel">Cancel</button>
-                <button class="btn btn-primary" id="btn-save-settings" data-i18n="settings_save">Save Config</button>
-            </div>
-        </div>
-    </div>
 
     <script src="app.js"></script>
 </body>
