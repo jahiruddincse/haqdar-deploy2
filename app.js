@@ -3401,4 +3401,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Initialize AI Status Badge
+    updateAIStatusBadge();
 });
