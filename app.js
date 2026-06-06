@@ -1992,28 +1992,29 @@ Use this curated legal database information as the ground truth. Customise the l
     }
 
     const systemInstruction = `You are HaqDar (हक़दार) — an AI-powered legal rights assistant for India.
-The user has described a problem. Your job is to analyze their problem, identify their legal rights under Indian law, create a step-by-step escalation ladder (how they can fight back when denied their rights), list relevant portals/helplines, generate a customized ready-to-fill written complaint/RTI letter template, determine required documents, and set up a milestone timeline.
+The user has described a problem. Your job is to analyze their problem, identify their legal rights under Indian law, including the Constitution of India (Fundamental Rights, Articles, and Schedules) and specific acts (such as BNS 2023, BNSS 2023, BSA 2023, RTI Act 2005, NFSA 2013, Code on Wages 2019, Forest Rights Act 2006, and regional/state-specific regulations).
 
 You must output a JSON object containing the following keys (and nothing else):
 - "title": A short, clear title for the legal issue (in the user's language).
-- "law": The relevant sections of Indian laws (e.g. BNSS, BNS, RTI Act, NFSA, labour laws).
-- "rights": An array of 3-5 key legal rights the user has in this situation (in the user's language).
-- "escalation": An array of 3-4 steps (each has "level" as an integer starting at 1, "title" in the user's language, and "desc" in the user's language detailing what they should do and whom they should contact. If there is a website link, add it. If they can contact a higher authority, mention it).
-- "portals": A key-value object of useful government portals, websites or helplines related to the issue (e.g., {"National Portal": "https://...", "Helpline": "112"}).
+- "law": The relevant sections of Indian laws and specific Articles of the Constitution of India (e.g. Article 21, Article 19, Sixth Schedule, etc.).
+- "rights": An array of 3-5 key legal rights the user has in this situation, referencing constitutional protections where applicable (in the user's language).
+- "escalation": An array of 3-4 steps (each has "level" as an integer starting at 1, "title" in the user's language, and "desc" in the user's language detailing what they should do and whom they should contact. If there is a verified website link, add it. If they can contact a higher authority, mention it).
+- "portals": A key-value object of verified official government portals, websites or helplines related to the issue (e.g., {"National Portal": "https://...", "Helpline": "112"}).
 - "document_template": A complete, ready-to-fill written complaint/application template in plain text (in the user's language) with placeholders like [FULL NAME], [DATE], [PLACE], [DETAILS OF INCIDENT], etc., so the user can copy/paste or download it.
 - "document_checklist": An array of required documents that the user needs for this category, each item being an object with:
   - "name": Name of the document (in the user's language, e.g. "Identity Proof", "Ration Card copy", "Circle Office application receipt").
   - "status": Expected standard status, either "present" (for basic documents like ID) or "missing" (for case-specific applications/receipts/denial letters).
-  - "how_to_get": Practical guidance on how/where to get this document (in the user's language).
+  - "how_to_get": Practical guidance on how/where to get this document from trusted sources (in the user's language).
 - "timeline": An array of milestone steps, each containing:
   - "days": Number of offset days from today (e.g., 0, 15, 30, 90) representing the deadline/milestone.
   - "event": Name of the milestone (in the user's language, e.g., "File Complaint", "First Appeal", "Second Appeal", "Magistrate Complaint").
   - "action_prompt": A recommended prompt/message the user can use or ask the AI to generate for this step (in the user's language, e.g., "Draft a First Appeal for my crop compensation delay under RTI").
 
-Rules:
+Rules & Requirements:
 1. Always respond in the language the user is chatting in (English, Hindi, Assamese, or Hinglish). If the user asks in Hindi, the fields "title", "rights", "escalation", "document_template", "document_checklist.name", "document_checklist.how_to_get", "timeline.event", and "timeline.action_prompt" must be in Hindi.
-2. Ground your response in actual Indian laws and regulations (e.g., BNSS 2023, BNS 2023, or older CrPC/IPC if relevant, RTI Act 2005, NFSA 2013, Code on Wages 2019, Sixth Schedule of Constitution of India, Forest Rights Act 2006).
-3. Keep the tone helpful, professional, and empowering.
+2. Ground your response in 100% real, trusted, and verified Indian laws, regulations, and the Constitution of India (e.g. Article 14 for Equality, Article 19 for Freedoms, Article 21 for Life and Livelihood, Article 21A for Education, Article 226/32 for Writs, and the Sixth Schedule for tribal areas). Do not hallucinate or make up non-existent laws.
+3. For Northeast-specific queries (Assam, Nagaland, Manipur, Meghalaya, Mizoram, Arunachal Pradesh, Tripura & Sikkim), you must include specific local acts (such as BEFR 1873, Assam Land Regulation 1886) and verify that links/portals provided (like Dharitree, RTPS portals) are real and active.
+4. Keep the tone helpful, professional, and empowering.
 
 Current Language Selected in UI: ${currentLang === 'hi' ? 'Hindi' : currentLang === 'as' ? 'Assamese' : 'English'}.
 
@@ -2281,30 +2282,30 @@ function handleNECardClick(category) {
     const isHindi = currentLang === 'hi';
     const isAssamese = currentLang === 'as';
     
-    if (category === 'ne_afspa') {
+    if (category === 'ne_land_flood') {
         query = isHindi 
-            ? "AFSPA क्षेत्र में सेना/पुलिस ने मेरे घर में तोड़फोड़ की और परेशान किया, शिकायत कैसे करें?" 
+            ? "असम बाढ़ में मेरी फसल का नुकसान हुआ और मुझे मुआवजा नहीं मिला। मैं कैसे शिकायत या आवेदन करूँ?" 
             : isAssamese
-            ? "AFSPA এলেকাত সেনাবাহিনীয়ে মোৰ ঘৰত তাণ্ডব কৰিলে, কেনেকৈ অভিযোগ কৰিম?"
-            : "Army/police did property damage and harassed villagers in my area under AFSPA, how to complain?";
-    } else if (category === 'ne_nrc') {
+            ? "অসমৰ বানপানীত মোৰ শস্যৰ ক্ষতি হ’ল কিন্তু মই ক্ষতিপূৰণ পোৱা নাই। মই কেনেকৈ আবেদন বা অভিযোগ কৰিম?"
+            : "My crop got damaged in the Assam floods and I haven't received compensation. How can I apply/complain?";
+    } else if (category === 'ne_scholarship_tea') {
         query = isHindi 
-            ? "असम में मेरा नाम अंतिम NRC सूची से बाहर कर दिया गया है, मुझे आगे क्या करना चाहिए?" 
+            ? "मैं चाय बागान का मजदूर हूँ और मुझे वेतन की समस्या है, या मेरी छात्रवृत्ति में देरी हुई है। मुझे क्या करना चाहिए?" 
             : isAssamese
-            ? "অসমৰ চূড়ান্ত NRC তালিকাৰ পৰা মোৰ নাম বাদ পৰিছে, মই এতিয়া কি কৰিব লাগে?"
-            : "My name is excluded from the final NRC list in Assam, what should I do next?";
-    } else if (category === 'ne_ilp') {
+            ? "মই এজন চাহ বাগিচাৰ শ্ৰমিক, মোৰ মজুৰি আৰু সা-সুবিধাৰ সমস্যা হৈছে, অথবা মোৰ জলপানিৰ পলম হৈছে। মই কি কৰিব পাৰোঁ?"
+            : "I'm a tea garden worker facing wage issues and lack of facilities, or my student scholarship is delayed. What can I do?";
+    } else if (category === 'ne_ilp_border') {
         query = isHindi 
-            ? "मेरा इनर लाइन परमिट (ILP) आवेदन 2 सप्ताह से लंबित है, इसकी शिकायत कहाँ करें?" 
+            ? "मेरा इनर लाइन परमिट (ILP) आवेदन 2 सप्ताह से लंबित है, या मेरा सीमा भूमि विवाद है। इसकी शिकायत कहाँ करें?" 
             : isAssamese
-            ? "মোৰ ইনাৰ লাইন পাৰ্মিট (ILP) আবেদনখন ২ সপ্তাহ ধৰি ওলমি আছে, কেনেকৈ অভিযোগ কৰিম?"
-            : "My Inner Line Permit (ILP) application is pending for 2 weeks, how to escalate?";
-    } else if (category === 'ne_tribal') {
+            ? "মোৰ ইনাৰ লাইন পাৰ্মিট (ILP) আবেদনখন ২ সপ্তাহ ধৰি ওলমি আছে, অথবা মোৰ সীমাৰ মাটিৰ বিবাদ হৈছে। কেনেকৈ অভিযোগ কৰিম?"
+            : "My Inner Line Permit (ILP) application is pending for 2 weeks, or I have a border land dispute. How to escalate?";
+    } else if (category === 'ne_customary_tribal') {
         query = isHindi 
-            ? "गैर-आदिवासियों ने मेरी जनजातीय भूमि पर अवैध रूप से कब्जा कर लिया है, क्या कानूनी कार्रवाई करें?" 
+            ? "गैर-आदिवासियों ने मेरी जनजातीय भूमि पर अवैध रूप से कब्जा कर लिया है, या मेरा रूढ़िवादी कानून भूमि विवाद है। क्या कानूनी कार्रवाई करें?" 
             : isAssamese
-            ? "অনা-জনগোষ্ঠীয়ে মোৰ জনজাতীয় ভূমিত অবৈধ দখল কৰিছে, কি আইনী ব্যৱস্থা ল’ব পাৰি?"
-            : "Non-tribals have illegally occupied my tribal land, what legal actions can I take?";
+            ? "অনা-জনগোষ্ঠীয়ে মোৰ জনজাতীয় ভূমিত অবৈধ দখল কৰিছে, অথবা মোৰ প্ৰচলিত আইনৰ মাটিৰ বিবাদ হৈছে। কি আইনী ব্যৱস্থা ল’ব পাৰি?"
+            : "Non-tribals have illegally occupied my tribal land, or I have a customary law land dispute. What legal actions can I take?";
     }
 
     const chatInput = document.getElementById('chat-input');
