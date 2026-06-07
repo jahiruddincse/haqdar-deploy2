@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haqqdar AI (हक़دار AI) — India's AI Rights & Benefits Navigator</title>
-    <meta name="description" content="Haqqdar AI is India's AI-powered Rights, Benefits, and Public Services Intelligence Platform. We identify your rights, detect document gaps, and show you the path.">
+    <title>Haqqdar AI (हक़दार AI) — India's AI Rights & Benefits Navigator</title>
+    <meta name="description" content="Haqqdar AI is India's AI-powered Rights, Benefits, and Public Services Intelligence Platform. We identify your rights, detect document gaps, and show you the path forward.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
+    
+    <!-- Enhancement Modules CSS -->
+    <link rel="stylesheet" href="enhancements/ui-enhancements.css">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%231e40af' width='180' height='180'/><text x='50%' y='50%' font-size='90' fill='white' text-anchor='middle' dy='.3em'>⚖️</text></svg>">
 </head>
 <body>
     <!-- Ambient Background -->
@@ -77,7 +87,7 @@
                     When bureaucracy gets complicated, <span class="highlight-green">Haqqdar</span> shows the way.
                 </h1>
                 <p class="hero-subtitle" data-i18n="hero_subtitle">
-                    Millions of Indians lose benefits, wages, justice, and opportunities simply because they do not know the next step. Haqqdar uses AI to identify your rights, generate legal documents, and guide you through every escalation path — in your language.
+                    Millions of Indians lose benefits, wages, justice, and opportunities simply because they do not know the next step. Haqqdar uses AI to identify your rights, generate legal documents, and provide clear escalation paths.
                 </p>
                 
                 <div class="hero-cta">
@@ -419,7 +429,7 @@
             <div class="section-header">
                 <span class="section-tag" data-i18n="gap_tag">PAPERWORK INTELLIGENCE</span>
                 <h2 class="section-title" data-i18n="gap_title">Document Gap Detector</h2>
-                <p class="section-desc" data-i18n="gap_desc">Bridge your paperwork gaps before submitting to avoid rejections. Check your profile, identify missing documents, and see resolution steps.</p>
+                <p class="section-desc" data-i18n="gap_desc">Bridge your paperwork gaps before submitting to avoid rejections. Check your profile, identify missing documents, and see resolution strategies.</p>
             </div>
             
             <div class="gap-detector-layout">
@@ -694,6 +704,13 @@
         </div>
     </div>
 
+    <!-- Enhancement Modules Scripts -->
+    <script src="enhancements/analytics-module.js"></script>
+    <script src="enhancements/notification-system.js"></script>
+    <script src="enhancements/pdf-export.js"></script>
+    <script src="enhancements/offline-support.js"></script>
+
+    <!-- Existing Application Scripts (Unchanged) -->
     <script src="schemes-database.js"></script>
     <script src="app.js"></script>
 </body>
